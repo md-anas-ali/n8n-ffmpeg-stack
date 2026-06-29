@@ -1,5 +1,5 @@
 # Official n8n image
-FROM FROM n8nio/n8n:latest
+FROM n8nio/n8n:latest
 
 # Switch to root
 USER root
