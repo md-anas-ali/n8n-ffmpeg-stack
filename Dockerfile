@@ -1,15 +1,25 @@
-# Use the official n8n image from n8n.io as the base
-FROM docker.n8n.io/n8nio/n8n
+# Official n8n image
+FROM docker.n8n.io/n8nio/n8n:latest
 
-# Switch to root to install packages
+# Switch to root
 USER root
 
-# Install Docker CLI and ffmpeg
-RUN apk add --no-cache docker-cli ffmpeg
+# Install packages
+RUN apk update && \
+    apk add --no-cache \
+      ffmpeg \
+      docker-cli \
+      python3 \
+      py3-pip \
+      curl \
+      bash && \
+    python3 -m pip install --upgrade pip --break-system-packages && \
+    python3 -m pip install edge-tts --break-system-packages && \
+    addgroup -S docker || true && \
+    addgroup node docker && \
+    rm -rf /var/cache/apk/*
 
-# Create the docker group if it does not exist and add the 'node' user to it
-RUN addgroup -S docker || true
-RUN addgroup node docker
-
-# Switch back to the default user 'node'
+# Back to node user
 USER node
+
+EXPOSE 5678
