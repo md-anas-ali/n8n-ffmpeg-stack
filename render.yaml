@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: n8n-anas-ali
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+
+    envVars:
+      - key: N8N_PORT
+        value: "5678"
+
+      - key: N8N_PROTOCOL
+        value: https
+
+      - key: N8N_HOST
+        sync: false
+
+      - key: WEBHOOK_URL
+        sync: false
+
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+
+      - key: TZ
+        value: Asia/Dhaka
+
+      - key: GENERIC_TIMEZONE
+        value: Asia/Dhaka
+
+      - key: EXECUTIONS_DATA_SAVE_ON_ERROR
+        value: all
+
+      - key: EXECUTIONS_DATA_SAVE_ON_SUCCESS
+        value: none
+
+      - key: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
+        value: "true"
+
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=512"
